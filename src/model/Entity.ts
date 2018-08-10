@@ -2,7 +2,7 @@ import uuid from '@/utils/uuid';
 
 export default abstract class Entity {
 
-  private id: string;
+  private readonly id: string;
   private props?: Map<string, any>;
 
   constructor(option: any = {}) {

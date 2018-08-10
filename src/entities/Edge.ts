@@ -2,8 +2,8 @@ import { DisplayObject, Icon, Label } from '../model/';
 
 export default class Edge extends DisplayObject {
 
-  private icon: Icon;
-  private label: Label;
+  private icon?: Icon;
+  private label?: Label;
 
   constructor(option: any = {}) {
     const { icon, label, ...others } = option;
@@ -11,19 +11,19 @@ export default class Edge extends DisplayObject {
     this.icon = new Icon(icon);
     this.label = new Label(label);
   }
-  public getLabel(): Label {
+  public getLabel(): Label | void {
     return this.label;
   }
   public setLabel(label: any) {
-    if (label as Label || label as object) {
+    if (label instanceof Label || label instanceof Object) {
       this.label = new Label(label);
     }
   }
-  public getIcon(): Icon {
+  public getIcon(): Icon | void {
     return this.icon;
   }
   public setIcon(icon: any) {
-    if (icon as Icon || icon as object) {
+    if (icon instanceof Icon || icon instanceof Object) {
       this.icon = new Icon(icon);
     }
   }

@@ -5,7 +5,10 @@ const GraphView =  class {
       const node = new Node({
         point: { x: 10, y: 10 },
       });
-      console.log(node.getPoint());
+      node.setLabel({
+        text: '3223',
+      });
+      console.log(node);
   }
 };
 
