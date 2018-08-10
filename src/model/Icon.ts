@@ -14,9 +14,6 @@ export default class Icon extends DisplayObject {
   public setPath(src: string) {
     this.src = src;
   }
-  public render(point: any, style: any) {
-    // empty
-  }
   public dispose() {
     // empty
   }

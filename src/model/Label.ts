@@ -9,9 +9,6 @@ export default class Label extends DisplayObject {
 
     this.text = text || '';
   }
-  public render(point: any, style: any) {
-    // empty
-  }
   public dispose() {
     // empty
   }

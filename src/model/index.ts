@@ -13,6 +13,7 @@ import GeoPoint from './GeoPoint';
 import Point from './Point';
 import Icon from './Icon';
 import Label from './Label';
+import Entity from './Entity';
 
 
 export {
@@ -21,4 +22,5 @@ export {
   Point,
   Icon,
   Label,
+  Entity,
 };

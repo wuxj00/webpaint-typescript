@@ -24,6 +24,5 @@ export default abstract class DisplayObject extends Entity {
   public getStyle(name: string) {
     return this.styles && this.styles.get(name);
   }
-  public abstract render(point: any, style: any): void;
   public abstract dispose(): void;
 }
