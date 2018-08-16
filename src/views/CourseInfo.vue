@@ -32,6 +32,8 @@
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
+  import { GraphView } from '@/GraphView';
+
 
   @Component({
     components: {

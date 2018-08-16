@@ -1,16 +1,25 @@
 import { Node, Edge } from './entities/';
+import zrender from 'zrender';
 
-const GraphView =  class {
+class GraphView {
   constructor(option: any) {
-      const node = new Node({
-        point: { x: 10, y: 10 },
-      });
-      node.setLabel({
-        text: '3223',
-      });
-      console.log(node);
+    // const node = new Node({});
+    // node.render();
+    const zr = zrender.init(document.getElementById('map') as HTMLDivElement);
+    const circle = new zrender.Circle({
+      shape: {
+        cx: 150,
+        cy: 50,
+        r: 40,
+      },
+      style: {
+        fill: 'none',
+        stroke: '#F00',
+      },
+    });
+    zr.add(circle);
   }
-};
+}
 
 export {
   Node,

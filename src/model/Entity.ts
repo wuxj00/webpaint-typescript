@@ -8,7 +8,7 @@ export default abstract class Entity {
   constructor(option: any = {}) {
     const { id, attrs } = option;
     this.id = id || uuid();
-    if (attrs as object) {
+    if (attrs instanceof Object) {
       Object.keys(attrs).forEach((key) => this.setAttr(key.toString(), attrs[key]));
     }
   }
@@ -20,10 +20,10 @@ export default abstract class Entity {
   }
   public setAttr(key: string, val: any) {
     const props = this.getAttrs();
-    if (props as undefined) {
+    if (props === undefined ) {
       this.props = new Map();
       return this.props.set(key, val);
-    } else if (props as Map<string, any> ) {
+    } else if (props instanceof Map) {
       return props.set(key, val);
     }
   }

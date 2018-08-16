@@ -32,7 +32,7 @@
               </el-menu>
             </div>
             <div class="layout-right">
-              <router-view></router-view>
+                <canvas id="map" width="1600px" height="900px"></canvas>
             </div>
           </div>
         </el-main>
@@ -44,6 +44,7 @@
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
   import UserInfo from '@/components/UserInfo.vue';
+  import { GraphView } from '@/GraphView';
 
   @Component({
     components: {
@@ -75,6 +76,10 @@
         icon: 'scroe-anlay',
       },
     ];
+
+    private mounted() {
+      const gv = new GraphView({});
+    }
   }
 </script>
 
