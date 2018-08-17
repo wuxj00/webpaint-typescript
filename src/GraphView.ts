@@ -30,17 +30,17 @@ class GraphView {
         width: 150,
         height: 150,
         image: img,
-      }
+      },
     });
     const elem = document.getElementById('map') as HTMLCanvasElement;
-    const ctx =elem.getContext('2d');
+    const ctx = elem.getContext('2d');
     const paniter = zr.painter;
     paniter._doPaintEl(circle, {
-      ctx
+      ctx,
     }, true, {});
-    setTimeout(()=>{
+    setTimeout(() => {
       paniter._doPaintEl(image, {
-        ctx
+        ctx,
       }, true, {});
     }, 500);
   }

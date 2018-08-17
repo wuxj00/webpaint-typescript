@@ -9,7 +9,6 @@ export default class Image {
     ctx.globalAlpha = style.opacity == null ? 1 : style.opacity;
 
     ctx.globalCompositeOperation = style.blend || 'source-over';
-    console.log(zrender);
     ctx.lineWidth = 2;
     zrender.Circle.prototype.buildPath(ctx, shape);
     ctx.fill();
