@@ -1,5 +1,8 @@
 {
   "defaultSeverity": "warning",
+  "globals": {
+    "zrender": true
+  },
   "extends": [
     "tslint:recommended"
   ],
