@@ -1,12 +1,30 @@
 import Entity from './Entity';
+import { RectBox } from '../interface/common';
 
 export default abstract class DisplayObject extends Entity {
 
   private styles?: Map<string, any>;
 
-  constructor(option: any = {}) {
-    super(option);
+  private width: number = 0;
+  private height: number = 0;
+  private x: number = 0;
+  private y: number = 0;
 
+  constructor({ x, y, width, height, ...more}: any = {}) {
+    super(more);
+    this.x = x;
+    this.y = y;
+    this.height = height;
+    this.width = width;
+  }
+
+  public getRectBox(): RectBox {
+    return {
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      height: this.height,
+    };
   }
   public getStyles(): any {
     return this.styles;

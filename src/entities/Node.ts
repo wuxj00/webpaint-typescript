@@ -3,20 +3,12 @@ import { Image } from '../painter/';
 import { Image as ZImage, Text } from 'zrender';
 
 export default class Node extends DisplayObject {
-  private geoPoint?: GeoPoint;
-  private point?: Point;
   private icon?: Icon;
   private label?: Text;
 
-  constructor(option: any = {}) {
-    const { point, geoPoint, icon, label, ...others } = option;
-    super(others);
-    if (geoPoint) {
-      this.geoPoint = new GeoPoint(geoPoint);
-    }
-    if ( point) {
-      this.point = new Point(point);
-    }
+  constructor({ icon, label, ...more }: any = {}) {
+    super(more);
+
     if (icon) {
       this.icon = new Icon(icon);
     }
@@ -24,22 +16,7 @@ export default class Node extends DisplayObject {
       this.label = new Text(label);
     }
   }
-  public getPoint(): any {
-    return this.point;
-  }
-  public setPoint(p: any): void {
-    if (p instanceof Point || p instanceof Object) {
-      this.point = new Point(p);
-    }
-  }
-  public getGeoPoint(): GeoPoint | void {
-    return this.geoPoint;
-  }
-  public setGeoPoint(p: any): void {
-    if (p instanceof GeoPoint || p instanceof Object) {
-      this.geoPoint = new GeoPoint(p);
-    }
-  }
+
   public getLabel(): Text | void {
     return this.label;
   }
