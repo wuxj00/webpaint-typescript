@@ -3,19 +3,31 @@ import { RectBox } from '../interface/common';
 
 export default abstract class DisplayObject extends Entity {
 
-  private styles?: Map<string, any>;
+  protected width: number = 0;
+  protected height: number = 0;
+  protected x: number = 0;
+  protected y: number = 0;
 
-  private width: number = 0;
-  private height: number = 0;
-  private x: number = 0;
-  private y: number = 0;
+  protected style?: any = {
+    stroke: '#000',
+    lineWidth: 1,
+    textAlign: 'center',
+    textVerticalAlign: 'top',
+    fontSize: 14,
+    fontFamily: '微软雅黑',
+    textFill: '#000',
+    blend: 'source-over',
+  };
 
-  constructor({ x, y, width, height, ...more}: any = {}) {
+  private draggable: boolean = true;
+
+  constructor({ x, y, width, style = {}, height, ...more}: any = {}) {
     super(more);
     this.x = x;
     this.y = y;
     this.height = height;
     this.width = width;
+    this.style = Object.assign({}, this.style, style || {});
   }
 
   public getRectBox(): RectBox {
@@ -27,20 +39,16 @@ export default abstract class DisplayObject extends Entity {
     };
   }
   public getStyles(): any {
-    return this.styles;
+    return this.style;
   }
   public setStyle(name: string, style: any) {
     const styles = this.getStyles();
-    if (styles as undefined) {
-      this.styles = new Map();
-      return this.styles.set(name, style);
-    } else if (styles as Map<string, any>) {
-      return styles.set(name, style);
-    }
+    style[name] = style;
   }
 
   public getStyle(name: string) {
-    return this.styles && this.styles.get(name);
+    const styles = this.getStyles();
+    return styles[name];
   }
   public abstract dispose(): void;
 }

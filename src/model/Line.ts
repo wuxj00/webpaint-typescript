@@ -2,22 +2,24 @@ import DisplayObject from './DisplayObject';
 import zrender from 'zrender';
 
 export default class Label extends DisplayObject {
-  protected zText: any;
+  protected zLine: any;
   constructor(option: any = {}) {
-    const { text, x, y, ...more } = option;
+    const { text, x1, x2, y1, y2, ...more } = option;
     super(more);
 
-    this.zText = new zrender.Text({
+    this.zLine = new zrender.Line({
       draggable: false,
-      style: Object.assign({}, this.style, {
-        x,
-        y,
-        text,
-      }),
+      shape:  {
+        x1,
+        x2,
+        y1,
+        y2,
+      },
+      style: Object.assign({}, this.style),
     });
   }
   public getEntity() {
-    return this.zText;
+    return this.zLine;
   }
   public dispose() {
     // empty

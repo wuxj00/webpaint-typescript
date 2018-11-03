@@ -14,7 +14,7 @@ import Point from './Point';
 import Icon from './Icon';
 import Label from './Label';
 import Entity from './Entity';
-
+import Line from './Line';
 
 export {
   DisplayObject,
@@ -23,4 +23,5 @@ export {
   Icon,
   Label,
   Entity,
+  Line,
 };

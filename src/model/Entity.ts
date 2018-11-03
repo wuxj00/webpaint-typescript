@@ -12,6 +12,9 @@ export default abstract class Entity {
       Object.keys(attrs).forEach((key) => this.setAttr(key.toString(), attrs[key]));
     }
   }
+  public getId() {
+    return this.id;
+  }
   public getAttrs(): any {
     return this.props;
   }

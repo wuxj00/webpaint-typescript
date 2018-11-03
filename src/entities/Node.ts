@@ -1,28 +1,41 @@
 import { DisplayObject, GeoPoint, Point, Icon, Label } from '../model/';
 import { Image } from '../painter/';
-import { Image as ZImage, Text } from 'zrender';
+import { NodePosition } from '../interface/common';
+import { Image as ZImage } from 'zrender';
 
 export default class Node extends DisplayObject {
   private icon?: Icon;
-  private label?: Text;
+  private label?: Label;
 
   constructor({ icon, label, ...more }: any = {}) {
     super(more);
 
     if (icon) {
-      this.icon = new Icon(icon);
+      this.icon = new Icon({
+        x: this.x,
+        y: this.y,
+        width: this.width,
+        height: this.height,
+        image: icon,
+        style: this.style,
+      });
     }
     if (label) {
-      this.label = new Text(label);
+      this.label = new Label({
+        x: this.x,
+        y: this.y + this.height / 2,
+        text: label,
+        style: this.style,
+      });
     }
   }
 
-  public getLabel(): Text | void {
+  public getLabel(): Label | void {
     return this.label;
   }
   public setLabel(label: any) {
     if (label instanceof Object) {
-      this.label = new Text(label);
+      this.label = new Label(label);
     }
   }
   public getIcon(): Icon | void {
@@ -34,14 +47,17 @@ export default class Node extends DisplayObject {
     }
   }
 
-  public render() {
-    const elem: HTMLCanvasElement = document.getElementById('map') as HTMLCanvasElement;
-    const ctx: CanvasRenderingContext2D = elem.getContext('2d') as CanvasRenderingContext2D;
-    Image.render(ctx, {
-      cx: 200,
-      cy: 200,
-      r: 40,
-    });
+  public getPosition(): NodePosition {
+    return {
+      x: this.x,
+      y: this.y,
+    };
+  }
+
+  public render(painter: any, ctx: CanvasRenderingContext2D) {
+    
+    this.icon && painter(this.icon.getEntity(), ctx);
+    this.label && painter(this.label.getEntity(), ctx);
   }
   public dispose() {
     // empty

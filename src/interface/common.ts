@@ -26,3 +26,15 @@ export interface ImageModel {
   src: string;
   [key: string]: any;
 }
+
+export interface EdgeOption {
+  source: string;
+  target: string;
+  [key: string]: any;
+}
+
+
+export interface NodePosition {
+  x: number;
+  y: number;
+}

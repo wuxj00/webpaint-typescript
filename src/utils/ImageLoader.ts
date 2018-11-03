@@ -1,7 +1,7 @@
 import { ImageModel } from '../interface/common';
 import ImageMgr from '../plugins/ImageMgr';
 
-const imageMgr = new ImageMgr();
+export const imageMgr = new ImageMgr();
 
 export async function ImageLoader(arr: ImageModel[]) {
   return Promise.all( arr.map((img) => {
@@ -19,4 +19,8 @@ export async function ImageLoader(arr: ImageModel[]) {
   })).then(() => {
     return imageMgr;
   });
+}
+
+export function getImageMgr(): ImageMgr {
+  return imageMgr;
 }

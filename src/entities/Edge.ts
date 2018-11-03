@@ -1,35 +1,38 @@
-import { DisplayObject, Icon, Label } from '../model/';
+import { DisplayObject, Line, Icon, Label } from '../model/';
+import { EdgeOption, NodePosition } from '../interface/common';
+import { dm } from '../utils/DataModelHelper';
 
 export default class Edge extends DisplayObject {
 
-  private icon?: Icon;
-  private label?: Label;
+  private source!: string;
+  private target!: string;
+  private line?: any;
 
-  constructor(option: any = {}) {
-    const { icon, label, ...others } = option;
-    super(others);
-    this.icon = new Icon(icon);
-    this.label = new Label(label);
-  }
-  public getLabel(): Label | void {
-    return this.label;
-  }
-  public setLabel(label: any) {
-    if (label instanceof Label || label instanceof Object) {
-      this.label = new Label(label);
+  constructor(option: EdgeOption) {
+    super(option);
+    const source = dm.get(option.source);    
+    const target = dm.get(option.target);
+    
+    if (!source && !target) {
+      return;
     }
-  }
-  public getIcon(): Icon | void {
-    return this.icon;
-  }
-  public setIcon(icon: any) {
-    if (icon instanceof Icon || icon instanceof Object) {
-      this.icon = new Icon(icon);
-    }
+
+    const sp: NodePosition = source.getPosition();
+    const ep: NodePosition = target.getPosition();
+
+    this.line = new Line({
+     x1: sp.x,
+     y1: sp.y,
+     x2: ep.x,
+     y2: ep.y,
+     style: this.style, 
+    })
+    
   }
 
-  public render(): void {
+  public render(painter: any, ctx: CanvasRenderingContext2D): void {
     // empty
+    this.line && painter(this.line.getEntity(), ctx);
   }
   public dispose(): void {
     // empty
