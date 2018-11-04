@@ -1,5 +1,6 @@
 import DisplayObject from './DisplayObject';
 import { imageMgr } from '../utils/ImageLoader';
+import { RectBox } from '../interface/common';
 import zrender from 'zrender';
 import { ZImageOption } from '../interface/Zrender';
 
@@ -40,6 +41,9 @@ export default class Icon extends DisplayObject {
   }
   public getEntity() {
     return this.img;
+  }
+  public getBoundingRect(): RectBox {
+    return this.img.getBoundingRect();
   }
   public dispose() {
     // empty

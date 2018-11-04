@@ -1,5 +1,6 @@
 import { DisplayObject, Line, Icon, Label } from '../model/';
-import { EdgeOption, NodePosition } from '../interface/common';
+import { EdgeOption, Point, RectBox } from '../interface/common';
+import { mergeRect } from '../utils/common';
 import { dm } from '../utils/DataModelHelper';
 
 export default class Edge extends DisplayObject {
@@ -17,8 +18,8 @@ export default class Edge extends DisplayObject {
       return;
     }
 
-    const sp: NodePosition = source.getPosition();
-    const ep: NodePosition = target.getPosition();
+    const sp: Point = source.getPosition();
+    const ep: Point = target.getPosition();
 
     this.line = new Line({
      x1: sp.x,
@@ -29,7 +30,9 @@ export default class Edge extends DisplayObject {
     })
     
   }
-
+  public getBoundingRect(): RectBox {
+    return this.line.getBoundingRect();
+  }
   public render(painter: any, ctx: CanvasRenderingContext2D): void {
     // empty
     this.line && painter(this.line.getEntity(), ctx);

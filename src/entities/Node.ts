@@ -1,7 +1,7 @@
 import { DisplayObject, GeoPoint, Point, Icon, Label } from '../model/';
-import { Image } from '../painter/';
-import { NodePosition } from '../interface/common';
-import { Image as ZImage } from 'zrender';
+import { mergeRect } from '../utils/common';
+import { NodePosition, RectBox } from '../interface/common';
+import zrender from 'zrender';
 
 export default class Node extends DisplayObject {
   private icon?: Icon;
@@ -52,6 +52,11 @@ export default class Node extends DisplayObject {
       x: this.x,
       y: this.y,
     };
+  }
+
+  public getBoundingRect(): RectBox {
+    const rect = mergeRect(this.icon, this.label);
+    return rect;
   }
 
   public render(painter: any, ctx: CanvasRenderingContext2D) {

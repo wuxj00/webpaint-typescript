@@ -34,7 +34,7 @@ export interface EdgeOption {
 }
 
 
-export interface NodePosition {
+export interface Point {
   x: number;
   y: number;
 }

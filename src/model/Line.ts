@@ -1,5 +1,6 @@
 import DisplayObject from './DisplayObject';
 import zrender from 'zrender';
+import { RectBox } from '../interface/common';
 
 export default class Label extends DisplayObject {
   protected zLine: any;
@@ -17,6 +18,10 @@ export default class Label extends DisplayObject {
       },
       style: Object.assign({}, this.style),
     });
+  }
+
+  public getBoundingRect(): RectBox {
+    return this.zLine.getBoundingRect();
   }
   public getEntity() {
     return this.zLine;

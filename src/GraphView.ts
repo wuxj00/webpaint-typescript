@@ -1,74 +1,97 @@
 import { Node, Edge } from './entities/';
 import VectorTree from './collections/VectorTree';
 import { ImageLoader } from './utils/ImageLoader';
-import { dm } from './utils/DataModelHelper';
+import { dm, vt } from './utils/DataModelHelper';
 import zrender from 'zrender';
 import uuid from './utils/uuid';
 
 import pic1 from './assets/images/icon.jpg';
 import pic2 from './assets/images/2.jpg';
-import pic3 from './assets/images/3.jpg';
-import pic4 from './assets/images/4.jpg';
-import pic5 from './assets/images/5.jpg';
-import pic6 from './assets/images/6.jpg';
-import Painter from './mixin/Painter';
+import { DisplayObject } from './model';
 
 class GraphView {
   constructor(option: any) {
 
-    const dataModel = new VectorTree();
-    const id1: string = uuid();
-    const id2: string = uuid();
     const elem = document.getElementById('map') as HTMLCanvasElement;
     const zr = zrender.init(elem);
     const ctx = elem.getContext('2d') as CanvasRenderingContext2D;
+
+    elem.addEventListener('mousedown', (e: MouseEvent) => {
+      const { offsetX, offsetY } = e;
+      console.log(vt.getLeftTopList({
+        x: offsetX,
+        y: offsetY
+      }));
+    });
+
+    elem.addEventListener('mouseup', (e: MouseEvent) => {
+
+    });
+    
+
     const paniter = (obj: any, ctx: CanvasRenderingContext2D) => {
       zr.painter._doPaintEl(obj, {
         ctx,
       }, true, {});
     };
+
+    const id1: string = uuid();
+    const id2: string = uuid();
     ImageLoader([
       {id: id1, src: pic1 },
       {id: id2, src: pic2 },
-      {id: uuid(), src: pic3 },
-      {id: uuid(), src: pic4 },
-      {id: uuid(), src: pic5 },
     ]).then((res) => {
       const node1 = new Node({
+        id: 'node1',
         x: 100,
         y: 100,
         width: 50,
         icon: id1,
         height: 50,
-        label: 'hello world',
+        label: 'node1',
         style: {
           fontSize: 20,
-        }});
-      node1.render(paniter, ctx);
+      }});
 
       const node2 = new Node({
+        id: 'node2',
         x: 200,
         y: 200,
         width: 50,
         icon: id2,
         height: 50,
-        label: 'hello world',
+        label: 'node2',
         style: {
           fontSize: 20,
         }});
-      node2.render(paniter, ctx);
+      const node3 = new Node({
+        id: 'node3',
+        x: 101,
+        y: 300,
+        width: 50,
+        icon: id1,
+        height: 50,
+        label: 'node3',
+        style: {
+          fontSize: 20,
+        }});
       dm.add(node1.getId(), node1);
       dm.add(node2.getId(), node2);
-      
+      dm.add(node3.getId(), node3);
       const edge = new Edge({
+        id: 'edge1',
         source: node1.getId(),
         target: node2.getId(),
         style: {
           stroke: 'red',
           blend: 'destination-over',
         }
-      })
-      edge.render(paniter, ctx);
+      });
+      dm.add(edge.getId(), edge);
+      vt.forEach((data: any) => {
+        data.render(paniter, ctx);
+      });
+      console.log(vt)
     });
 
     

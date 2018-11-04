@@ -30,14 +30,8 @@ export default abstract class DisplayObject extends Entity {
     this.style = Object.assign({}, this.style, style || {});
   }
 
-  public getRectBox(): RectBox {
-    return {
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      height: this.height,
-    };
-  }
+  public abstract getBoundingRect(): RectBox;
+  
   public getStyles(): any {
     return this.style;
   }
