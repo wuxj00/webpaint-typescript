@@ -1,63 +1,53 @@
 import { Entity } from '../model/';
+import { LayerParam } from '../interface/common';
 
 export default abstract class Layer extends Entity {
-  private level: number;
+  private level: number = 0;
   private readonly name: string;
-  private readonly views: HTMLCanvasElement;
-  private width: number;
-  private height: number;
+  private views!: HTMLElement;
+  private target: HTMLElement;
 
-  constructor(option: any = {}) {
-    const { name, level, width, height, ...others } = option;
-    super(others);
-    this.name = name || '';
-    this.level = level || 0;
-    this.width = width || 0;
-    this.height = height || 0;
-    this.views = this.initElementView();
-  }
+  constructor({ name, target, ...more }: LayerParam) {
+    super(more);
+    this.name = name;
+    this.target = target;
+    this.createView();
 
-  public getWidth(): number {
-    return this.width;
   }
-  public setWidth(width: number) {
-    this.width = width;
-    const elem = this.getView();
-    elem.width = width;
+  public getTarget() {
+    return this.target;
   }
-  public getHeight(): number {
-    return this.height;
-  }
-  public setHeight(height: number) {
-    this.height = height;
-    const elem = this.getView();
-    elem.height = height;
-  }
-
-  public getView(): HTMLCanvasElement {
+  public getView(): HTMLElement {
     return this.views;
   }
-  public getContext(): CanvasRenderingContext2D | null {
-    const view = this.getView();
-    return view.getContext('2d');
+  public setView(view: HTMLElement) {
+    this.views = view;
   }
-
   public clear(): void {
-    const ctx = this.getContext();
-    if (ctx !== null) {
-      ctx.clearRect(0, 0, this.width, this.height);
+    const views = this.getView();
+    if (views instanceof HTMLCanvasElement) {
+      const canvas = views as HTMLCanvasElement;
+      const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+      const bbox = canvas.getBoundingClientRect();
+      ctx.clearRect(0, 0, bbox.width, bbox.height);
     }
   }
 
   public abstract render(): void;
 
-  private initElementView(): HTMLCanvasElement {
-    const elem = document.createElement('CANVASE') as HTMLCanvasElement;
-    elem.setAttribute('name', this.name);
-    elem.setAttribute('height', '100%');
-    elem.setAttribute('width', '100%');
-    elem.height = this.getWidth();
-    elem.width = this.getHeight();
-    return elem;
+  public getContext(): CanvasRenderingContext2D {
+    const view = this.getView() as HTMLCanvasElement;
+    return view.getContext('2d') as CanvasRenderingContext2D;
+  }
+
+  public createView(): void {
+    // rewirte
+    const view = this.getView();
+    view.setAttribute('layer-name', this.name);
+    view.setAttribute('class', 'layer');
+    if (this.name !== 'map') {
+      const tgtElem = this.getTarget();
+      tgtElem.appendChild(view);
+    }
   }
 }

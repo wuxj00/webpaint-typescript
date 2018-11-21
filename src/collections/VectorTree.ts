@@ -33,7 +33,7 @@ export default class GeoTree {
   }
 
   public getLeftTopList(p: Point, treeItem: VectorTreeItem | null = this.root) {
-    let storeList = [];
+    const storeList = [];
     if (treeItem === null) {
       return null;
     }

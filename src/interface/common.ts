@@ -1,5 +1,6 @@
 
 import { DisplayObject } from '../model/';
+import { GraphView } from '@/GraphView';
 
 export interface RectBox {
   x: number;
@@ -38,3 +39,16 @@ export interface Point {
   x: number;
   y: number;
 }
+
+export interface GraphViewParam {
+  target: string | HTMLElement;
+  [key: string]: any;
+}
+
+export interface LayerParam {
+  name: string;
+  map?: boolean;
+  target: HTMLElement;
+  [key: string]: any;
+}
+

@@ -12,6 +12,10 @@ export function add(id: string, data: any) {
   return store.set(id, data);
 }
 
+export function forEach(callback: (param: any) => void) {
+  store.forEach(callback);
+}
+
 export function getVectorTree() {
   return treeStore;
 }

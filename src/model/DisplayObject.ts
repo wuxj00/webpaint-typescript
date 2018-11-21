@@ -31,7 +31,6 @@ export default abstract class DisplayObject extends Entity {
   }
 
   public abstract getBoundingRect(): RectBox;
-  
   public getStyles(): any {
     return this.style;
   }

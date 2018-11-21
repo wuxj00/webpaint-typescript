@@ -1,7 +1,6 @@
-import { DisplayObject, GeoPoint, Point, Icon, Label } from '../model/';
+import { DisplayObject, GeoPoint, Icon, Label } from '../model/';
 import { mergeRect } from '../utils/common';
-import { NodePosition, RectBox } from '../interface/common';
-import zrender from 'zrender';
+import { RectBox, Point } from '../interface/common';
 
 export default class Node extends DisplayObject {
   private icon?: Icon;
@@ -47,7 +46,7 @@ export default class Node extends DisplayObject {
     }
   }
 
-  public getPosition(): NodePosition {
+  public getPosition(): Point {
     return {
       x: this.x,
       y: this.y,
@@ -59,10 +58,9 @@ export default class Node extends DisplayObject {
     return rect;
   }
 
-  public render(painter: any, ctx: CanvasRenderingContext2D) {
-    
-    this.icon && painter(this.icon.getEntity(), ctx);
-    this.label && painter(this.label.getEntity(), ctx);
+  public render(painter: any) {
+    this.icon && painter(this.icon.getEntity());
+    this.label && painter(this.label.getEntity());
   }
   public dispose() {
     // empty
