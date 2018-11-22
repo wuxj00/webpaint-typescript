@@ -11,6 +11,7 @@ export default class MapLayer extends Layer {
   constructor(option: any = {}) {
     const mixOpt = {...option, name: 'map' };
     super(mixOpt);
+    this.createView();
   }
   public render(): void {
     // empty
@@ -28,7 +29,6 @@ export default class MapLayer extends Layer {
     return this.map;
   }
   public createView() {
-
     const map = new Map({
       layers: [
         new TileLayer({

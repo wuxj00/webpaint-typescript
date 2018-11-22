@@ -11,8 +11,6 @@ export default abstract class Layer extends Entity {
     super(more);
     this.name = name;
     this.target = target;
-    this.createView();
-
   }
   public getTarget() {
     return this.target;

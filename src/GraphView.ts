@@ -13,9 +13,6 @@ class GraphView {
   public mapLayer!: MapLayer;
   public vectorLayer!: VecterLayer;
 
-  private painter!: (obj: any, ctx: CanvasRenderingContext2D) => void;
-
-
   constructor(option: GraphViewParam) {
     const { target = 'map', map = false } = option;
     let renderTarget: HTMLElement;
@@ -34,35 +31,16 @@ class GraphView {
     this.vectorLayer = new VecterLayer({
       target: renderTarget,
     });
-    // this.initPainter(target);
   }
-  public getPainter() {
-    return this.painter;
-  }
-
   public getDataModel() {
     return dm;
   }
-
-  private initPainter(target: string) {
-    const elem = document.getElementById(target) as HTMLElement;
-    const bbox = elem.getBoundingClientRect();
-    const canvas: HTMLCanvasElement = createElement('CANVAS') as HTMLCanvasElement;
-    canvas.height = bbox.height;
-    canvas.width = bbox.width;
-
-    elem.appendChild(canvas);
-
-    const zr = zrender.init(canvas);
-    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-
-    this.painter = (obj: any) => {
-      zr.painter._doPaintEl(obj, {
-        ctx,
-      }, true, {});
-    };
+  public getMapLayer() {
+    return this.mapLayer;
   }
-
+  public getVectorLayer() {
+    return this.vectorLayer;
+  }
 }
 
 export {

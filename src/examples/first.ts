@@ -15,7 +15,6 @@ export default class FirstDemo {
         target: 'map',
       });
       const dm = gv.getDataModel();
-      const painter = gv.getPainter();
       const node1 = new Node({
         id: 'node1',
         x: 100,
@@ -63,7 +62,7 @@ export default class FirstDemo {
       });
       dm.add(edge.getId(), edge);
       dm.forEach((data: any) => {
-        data.render(painter);
+        // data.render(painter);
       });
     });
   }
