@@ -1,6 +1,7 @@
 import { Node, Edge, uuid, ImageLoader, GraphView } from '../GraphView';
 import pic1 from '../assets/images/icon.jpg';
 import pic2 from '../assets/images/2.jpg';
+import { GeoNode } from '@/entities';
 
 
 export default class CreateOpenylayer {
@@ -18,46 +19,37 @@ export default class CreateOpenylayer {
       {id: id1, src: pic1 },
       {id: id2, src: pic2 },
     ]).then((res) => {
-      
-      const dm = gv.getDataModel();
-      const node1 = new Node({
-        id: 'node1',
-        x: 100,
-        y: 100,
-        width: 50,
-        icon: id1,
-        height: 50,
-        label: 'node1',
-        style: {
-          fontSize: 20,
-      }});
-      const node2 = new Node({
-        id: 'node2',
-        x: 200,
-        y: 200,
-        width: 50,
-        icon: id1,
-        height: 50,
-        label: 'node2',
-        style: {
-          fontSize: 20,
-        }});
-      dm.add(node1.getId(), node1);
-      dm.add(node2.getId(), node2);
-      const edge = new Edge({
-        id: 'edge1',
-        source: node1.getId(),
-        target: node2.getId(),
-        style: {
+      gv.addEntities([
+        { id: 'node1', type: 'geo-node', lng: 103, lat: 30, width: 50, height: 50, icon: id1, label: 'node1' },
+        { id: 'node2', type: 'geo-node', lng: 105, lat: 20, width: 50, height: 50, icon: id1, label: 'node2' },
+        { id: 'edge', type: 'edge', source: 'node1', target: 'node2', style: {
           stroke: 'red',
           blend: 'destination-over',
-        },
+        }},
+      ]);
+      const render  = () => {
+        gv.getDataModel().forEach((data: any) => {
+          data.render(painter);
+        });
+      };
+      render();
+
+      gv.getMapLayer().getGisMap().on('moveend', () => {
+        const mapLayer = gv.getMapLayer();
+        gv.getDataModel().forEach((data: any) => {
+          if (data instanceof GeoNode) {
+            const point = mapLayer.getPixelFromLngLat((data as GeoNode).getLngLat());
+            (data as GeoNode).setPosition({
+              x: point[0],
+              y: point[1]
+            });
+          } else if (data instanceof Edge) {
+            data.initEntities();
+          }
+        });
+        gv.getVectorLayer().clear();
+        render();
       });
-      dm.add(edge.getId(), edge);
-      dm.forEach((data: any) => {
-        data.render(painter);
-      });
-    });
-  
+    });  
   }
 }

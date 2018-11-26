@@ -52,3 +52,8 @@ export interface LayerParam {
   [key: string]: any;
 }
 
+export interface GeoNodeOption {
+  lng: number;
+  lat: number;
+  [key: string]: any;
+}

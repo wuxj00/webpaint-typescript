@@ -20,7 +20,6 @@ export default abstract class DisplayObject extends Entity {
   };
 
   private draggable: boolean = true;
-
   constructor({ x, y, width, style = {}, height, ...more}: any = {}) {
     super(more);
     this.x = x;
@@ -29,8 +28,10 @@ export default abstract class DisplayObject extends Entity {
     this.width = width;
     this.style = Object.assign({}, this.style, style || {});
   }
-
   public abstract getBoundingRect(): RectBox;
+
+  public abstract initEntities(): void;
+
   public getStyles(): any {
     return this.style;
   }

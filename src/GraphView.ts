@@ -1,4 +1,4 @@
-import { Node, Edge } from './entities/';
+import { Node, Edge, CompsMgr } from './entities/';
 import VectorTree from './collections/VectorTree';
 import { ImageLoader } from './utils/ImageLoader';
 import { dm, vt } from './utils/DataModelHelper';
@@ -14,6 +14,32 @@ class GraphView {
   public vectorLayer!: VecterLayer;
 
   constructor(option: GraphViewParam) {
+    this.initLayers(option);
+  }
+  public getDataModel() {
+    return dm;
+  }
+  public getMapLayer() {
+    return this.mapLayer;
+  }
+  public getVectorLayer() {
+    return this.vectorLayer;
+  }
+  public addEntities(enities: any[]) {
+    enities.forEach((entity) => {
+      if (entity instanceof DisplayObject) {
+        dm.add(entity.getId(), entity);
+      } else {
+        const type = entity.type;
+        const construcotr = CompsMgr.get(type);
+        if (construcotr) {
+          const inst = new construcotr(entity);
+          dm.add(inst.getId(), inst);
+        }
+      }
+    })
+  }
+  private initLayers(option: any) {
     const { target = 'map', map = false } = option;
     let renderTarget: HTMLElement;
     if (target instanceof HTMLElement) {
@@ -31,15 +57,6 @@ class GraphView {
     this.vectorLayer = new VecterLayer({
       target: renderTarget,
     });
-  }
-  public getDataModel() {
-    return dm;
-  }
-  public getMapLayer() {
-    return this.mapLayer;
-  }
-  public getVectorLayer() {
-    return this.vectorLayer;
   }
 }
 

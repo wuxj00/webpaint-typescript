@@ -8,7 +8,7 @@ export function get(id: string) {
 }
 
 export function add(id: string, data: any) {
-  treeStore.add(data);
+  // treeStore.add(data);
   return store.set(id, data);
 }
 

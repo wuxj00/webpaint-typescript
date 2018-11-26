@@ -5,15 +5,21 @@ import { dm } from '../utils/DataModelHelper';
 
 export default class Edge extends DisplayObject {
 
+  public static readonly type: string = 'edge';
+
   private source!: string;
   private target!: string;
   private line?: any;
 
-  constructor(option: EdgeOption) {
-    super(option);
-    const source = dm.get(option.source);    
-    const target = dm.get(option.target);
-    
+  constructor({ source, target, ...more }: EdgeOption) {
+    super(more);
+    this.source = source;
+    this.target = target;
+    this.initEntities();
+  }
+  public initEntities() {
+    const source = dm.get(this.source);
+    const target = dm.get(this.target);
     if (!source && !target) {
       return;
     }
@@ -26,10 +32,10 @@ export default class Edge extends DisplayObject {
      y1: sp.y,
      x2: ep.x,
      y2: ep.y,
-     style: this.style, 
-    })
-    
+     style: this.style,
+    });
   }
+
   public getBoundingRect(): RectBox {
     return this.line.getBoundingRect();
   }
